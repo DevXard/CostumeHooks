@@ -12,17 +12,17 @@ const useToggler = () => {
 
 }
 
-const useAxios = async (url) => {
-    const [ state, setState] = useState([])
+const useAxios = (url) => {
+    const [ response, setResponse] = useState([])
     
-    const handleAdd = async () => {
-        const res = await axios.get(url)
-        console.log(res.data)
-        setState(state => [...state, {...res.data, id:uuid()}])
+    const handleAdd = async (config="") => {
+        let mainUrl = typeof config === "string" ? `${url}${config}` : `${url}`
+        const res = await axios.get(mainUrl)
+        setResponse(state => [...state, {...res.data, id:uuid()}])
     }
     
 
-    return [state, handleAdd];
+    return [response, handleAdd];
 }
 
 export {useToggler, useAxios};
